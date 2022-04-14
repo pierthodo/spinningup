@@ -7,6 +7,7 @@ import base64
 from copy import deepcopy
 import cloudpickle
 import json
+import mbrl
 import numpy as np
 import os
 import os.path as osp
