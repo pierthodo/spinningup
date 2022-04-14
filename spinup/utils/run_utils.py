@@ -7,7 +7,6 @@ import base64
 from copy import deepcopy
 import cloudpickle
 import json
-import mbrl
 import numpy as np
 import os
 import os.path as osp
@@ -152,6 +151,7 @@ def call_experiment(exp_name, thunk, seed=0, num_cpu=1, data_dir=None,
         # Make 'env_fn' from 'env_name'
         if 'env_name' in kwargs:
             import gym
+            import mbrl
             env_name = kwargs['env_name']
             kwargs['env_fn'] = lambda : gym.make(env_name)
             del kwargs['env_name']
