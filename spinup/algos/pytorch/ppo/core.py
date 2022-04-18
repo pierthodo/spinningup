@@ -129,7 +129,11 @@ class MLPActorCritic(nn.Module):
             a = pi.sample()
             logp_a = self.pi._log_prob_from_distribution(pi, a)
             v = self.v(obs)
-        return a.numpy(), v.numpy(), logp_a.numpy()
+        if a.is_cuda:
+            return a.cpu().numpy(), v.cpu().numpy(), logp_a.cpu().numpy()
+        else:
+            return a.numpy(), v.numpy(), logp_a.numpy()
+
 
     def act(self, obs):
         return self.step(obs)[0]
