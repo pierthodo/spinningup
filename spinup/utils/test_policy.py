@@ -97,8 +97,8 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
 
     model = torch.load(fname)
     if device == "gpu":
-        device = torch.device("cuda")
-        model.to(device)
+        dev = torch.device("cuda")
+        model.to(dev)
 
     # make function for producing an action given a single state
     import time 
@@ -107,7 +107,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
             x = torch.as_tensor(x, dtype=torch.float32)
             t1 = time.time()
             if device == "gpu":
-                x.to(device)
+                x.to(dev)
             t2 = time.time()
             action = model.act(x)
             t3 = time.time()
