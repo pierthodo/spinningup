@@ -108,6 +108,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
             x = torch.as_tensor(x, dtype=torch.float32)
             t1 = time.time()
             if device == "gpu":
+                dev = torch.device("cuda")
                 print("Move to gpu")
                 x.to(dev)
             t2 = time.time()
