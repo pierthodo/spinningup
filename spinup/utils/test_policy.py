@@ -97,6 +97,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
 
     model = torch.load(fname)
     if device == "gpu":
+        print("Move model to gpu")
         dev = torch.device("cuda")
         model.to(dev)
 
@@ -104,7 +105,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
     import time 
     def get_action(x):
         with torch.no_grad():
-            x = torch.as_tensor(x, dtype=torch.float32)
+            x = torch.as_tensor(x, dtype=torch.float32,device=dev)
             t1 = time.time()
             if device == "gpu":
                 x.to(dev)
