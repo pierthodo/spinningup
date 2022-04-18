@@ -101,12 +101,21 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
         model.to(device)
 
     # make function for producing an action given a single state
+    import time 
     def get_action(x):
         with torch.no_grad():
-            x = torch.as_tensor(x, dtype=torch.float32,device=device)
+            x = torch.as_tensor(x, dtype=torch.float32)
+            t1 = time.time()
             if device == "gpu":
+                x = torch.as_tensor(x, dtype=torch.float32)
+            else:
                 x.to(device)
+            t2 = time.time()
             action = model.act(x)
+            t3 = time.time()
+            action = action.cpu()
+            t4 = time.time()
+            print("Move tensor: ",(t2-t1)+(t4-t3)," inference time: ",t3-t2) 
         return action
 
     return get_action
