@@ -105,7 +105,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
     import time 
     def get_action(x):
         with torch.no_grad():
-            x = torch.as_tensor(x, dtype=torch.float32,device=dev)
+            x = torch.as_tensor(x, dtype=torch.float32)
             t1 = time.time()
             if device == "gpu":
                 x.to(dev)
