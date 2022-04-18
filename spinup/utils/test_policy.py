@@ -94,17 +94,18 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
     
     fname = osp.join(fpath, 'pyt_save', 'model'+itr+'.pt')
     print('\n\nLoading from %s.\n\n'%fname)
-    if device == "cpu":
-        device =  torch.device('cpu')
-    else:
+
+    model = torch.load(fname)
+    if device == "gpu":
         device = torch.device("cuda")
-    
-    model = torch.load(fname,device=device)
+        model.to(device)
 
     # make function for producing an action given a single state
     def get_action(x):
         with torch.no_grad():
             x = torch.as_tensor(x, dtype=torch.float32,device=device)
+            if device == "gpu":
+                x.to(device)
             action = model.act(x)
         return action
 
