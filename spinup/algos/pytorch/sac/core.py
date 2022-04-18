@@ -96,5 +96,6 @@ class MLPActorCritic(nn.Module):
         with torch.no_grad():
             a, _ = self.pi(obs, deterministic, False)
             if a.is_cuda:
-                a.cpu()
-            return a.numpy()
+                return a.cpu().numpy()
+            else:
+                return a.numpy()
