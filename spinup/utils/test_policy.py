@@ -105,12 +105,11 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
     import time 
     def get_action(x):
         with torch.no_grad():
-            x = torch.as_tensor(x, dtype=torch.float32)
             t1 = time.time()
             if device == "gpu":
-                dev = torch.device("cuda")
-                print("Move to gpu")
-                x.to(dev)
+                x = torch.as_tensor(x, dtype=torch.float32,device=dev)
+            else:
+                x = torch.as_tensor(x, dtype=torch.float32)
             t2 = time.time()
             action = model.act(x)
             t3 = time.time()
