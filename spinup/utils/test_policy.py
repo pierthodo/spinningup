@@ -105,15 +105,11 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
     import time 
     def get_action(x):
         with torch.no_grad():
-            t1 = time.time()
             if device == "gpu":
                 x = torch.as_tensor(x, dtype=torch.float32,device=dev)
             else:
                 x = torch.as_tensor(x, dtype=torch.float32)
-            t2 = time.time()
             action = model.act(x)
-            t3 = time.time()
-            print("Move tensor: ",(t2-t1)," inference time: ",t3-t2) 
         return action
 
     return get_action
