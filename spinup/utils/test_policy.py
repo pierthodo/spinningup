@@ -107,8 +107,6 @@ def load_pytorch_policy(fpath, itr, deterministic=False,device="cpu"):
             x = torch.as_tensor(x, dtype=torch.float32)
             t1 = time.time()
             if device == "gpu":
-                x = torch.as_tensor(x, dtype=torch.float32)
-            else:
                 x.to(device)
             t2 = time.time()
             action = model.act(x)
